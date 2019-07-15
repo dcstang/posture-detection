@@ -3,29 +3,35 @@ import cv2
 import matplotlib.pyplot as plt
 
 
-img = cv2.imread('test_image.jpg')
 
-test_image_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-test_image_gray = np.array(test_image_gray, dtype='uint8')
 
-#plt.imshow(test_image_gray, cmap='gray')
-
-#cv2.imshow('face detection',test_image_gray)
+def convertToRGB(image):
+    return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 
 
 haar_cascade_face = cv2.CascadeClassifier('data/haarcascades/haarcascade_frontalface_default.xml')
 
-faces_rects = haar_cascade_face.detectMultiScale(test_image_gray, scaleFactor=1.3, minNeighbors=5)
+def detect_faces(cascade, test_image, scaleFactor = 1.1):
+    # create a copy of the image to prevent any changes to the original one.
+    image_copy = test_image.copy()
 
-print('Faces found:', len(faces_rects))
+    #convert the test image to gray scale as opencv face detector expects gray images
+    gray_image = cv2.cvtColor(image_copy, cv2.COLOR_BGR2GRAY)
+    gray_image = np.array(gray_image, dtype='uint8')
 
-for(x,y,w,h) in faces_rects:
-    cv2.rectangle(test_image_gray, (x,y), (x+w, y+h), (0, 255, 0), 2)
+    # Applying the haar classifier to detect faces
+    faces_rect = cascade.detectMultiScale(gray_image, scaleFactor=scaleFactor, minNeighbors=5)
 
-def convertToRGB(image):
-    return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    for (x, y, w, h) in faces_rect:
+        cv2.rectangle(image_copy, (x, y), (x+w, y+h), (0, 255, 0), 3)
 
-cv2.imshow('test',convertToRGB(test_image_gray))
+    return image_copy
+
+
+img = cv2.imread('test_image.jpg')
+
+face_test = detect_faces(haar_cascade_face, img)
+cv2.imshow('test', face_test)
 
 cv2.waitKey()
