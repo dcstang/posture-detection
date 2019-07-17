@@ -2,30 +2,6 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-
-cap = cv2.VideoCapture(0)
-
-while(True):
-    # Capture frame-by-frame
-    ret, frame = cap.read()
-
-    # Our operations on the frame come here
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-    # Display the resulting frame
-    cv2.imshow('frame',gray)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-# When everything done, release the capture
-cap.release()
-cv2.destroyAllWindows()
-
-
-
-
-
-
 def convertToRGB(image):
     return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -48,6 +24,35 @@ def detect_faces(cascade, test_image, scaleFactor = 1.1):
         cv2.rectangle(image_copy, (x, y), (x+w, y+h), (0, 255, 0), 3)
 
     return image_copy
+
+
+cap = cv2.VideoCapture(0)
+
+while(True):
+    # Capture frame-by-frame
+    ret, frame = cap.read()
+
+    # Our operations on the frame come here
+    #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    #do face detection
+    face_detect = detect_faces(haar_cascade_face, frame)
+
+    # Display the resulting frame
+    cv2.imshow('frame',face_detect)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# When everything done, release the capture
+cap.release()
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
 
 
 img = cv2.imread('test_image.jpg')
