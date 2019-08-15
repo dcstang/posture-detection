@@ -1,4 +1,3 @@
-"""
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -29,4 +28,3 @@ text = cv2.putText(img,'OpenCV',(10,500), font, 4,(255,255,255),2,cv2.LINE_AA)
 plt.imshow(text)
 
 cv2.imshow('tutorial',img)
-"""

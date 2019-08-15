@@ -7,7 +7,7 @@ def convertToRGB(image):
 
 
 
-haar_cascade_face = cv2.CascadeClassifier('data/haarcascades/haarcascade_frontalface_default.xml')
+haar_cascade_face = cv2.CascadeClassifier('C:/py_home/github_master/posture-detection/data/haarcascades/haarcascade_frontalface_default.xml')
 
 def detect_faces(cascade, test_image, scaleFactor = 1.1):
     # create a copy of the image to prevent any changes to the original one.
@@ -46,14 +46,6 @@ while(True):
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
-
-
-
-
-
-
-
-
 
 img = cv2.imread('test_image.jpg')
 
